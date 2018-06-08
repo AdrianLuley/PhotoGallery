@@ -10,8 +10,20 @@ const PHOTO_LIST_URL = "https://picsum.photos/list";
 class App extends Component {
   // 1. Declare a state object that will be used to track an array of photos
   state = {
+    photos: []
   }
-
+  componentDidMount() {
+    fetch(PHOTO_LIST_URL)
+      .then(result => result.json())
+      .then(photos => {
+        this.setState({ 
+		photos: photos 
+		})
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
   // 2. Declare a life cycle method
   // This life cycle method should:
   //  - will be called after the component is initially rendered
@@ -24,9 +36,7 @@ class App extends Component {
         <header>
           <h1>Photo Wall</h1>
           <p>
-            Start by reading App.jsx and completing the numbered steps.
-            Afterward, delete this paragraph. Then, open up App.css and
-            complete the instructions there.
+        
           </p>
         </header>
         <div className="collage">
@@ -34,9 +44,9 @@ class App extends Component {
               * and for loops are not. You'll learn more about this soon! 
               */}
             {photos.map( photo => 
-                <img alt={/* 3. Fill me in with the photo's filename */ ""}
-                     key={/* 4. Fill me in with the photo's id */ ""}
-                     src={/* 5. Fill me in with the photo's URL */ ""}
+                <img alt={/* 3. Fill me in with the photo's filename */ photo.filename}
+                     key={/* 4. Fill me in with the photo's id */ photo.id}
+                     src={/* 5. Fill me in with the photo's URL */ PHOTO_URL + photo.id}
                 />
             )}
         </div>
